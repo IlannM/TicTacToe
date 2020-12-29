@@ -14,4 +14,4 @@ random.o: random.cpp random.hpp
 	g++ -c random.cpp
 
 clear:
-	rm *.o TicTacToe.exe TicTacToeGameExport.txt
+	rm *.o TicTacToe.exe

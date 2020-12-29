@@ -22,14 +22,20 @@ int player_move(const char &player)
 {
     int move = 0;
     std::cout << player << ": ";
+    bool failed {false};
 
     do {
+        if (failed)
+            std::cout << "The number must be betweem 1-9.\n";
+        
         std::cin >> move;
 
         // handle invalid input
         if (std::cin.fail())
             clear_cin();
-    } while (move < 0 && move > 10);
+        
+        failed = true;
+    } while (move < 1 || move > 9);
 
     return move;
 }
@@ -41,7 +47,7 @@ char starting_player()
     std::cout << "Starting player (X/O).\n";
     std::cout << "Enter \'r\' to be random.\n";
 
-    while ((player != 'X') && (player != 'O') && (player != 'R'))
+    while (player != 'X' && player != 'O' && player != 'R')
     {
         if (!firsrt_time)
         {
@@ -147,71 +153,27 @@ bool is_taken(const int player_move, const char grid[3][3])
     switch (player_move)
     {
     case 0:
-        if ((grid[0][0] == 'O') || (grid[0][0] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[0][0] == 'O') || (grid[0][0] == 'X'));
     case 1:
-        if ((grid[0][1] == 'O') || (grid[0][1] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[0][1] == 'O') || (grid[0][1] == 'X'));        
     case 2:
-        if ((grid[0][2] == 'O') || (grid[0][2] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[0][2] == 'O') || (grid[0][2] == 'X'));        
     case 3:
-        if ((grid[1][0] == 'O') || (grid[1][0] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[1][0] == 'O') || (grid[1][0] == 'X'));
     case 4:
-        if ((grid[1][1] == 'O') || (grid[1][1] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[1][1] == 'O') || (grid[1][1] == 'X'));
     case 5:
-        if ((grid[1][2] == 'O') || (grid[1][2] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[1][2] == 'O') || (grid[1][2] == 'X'));
     case 6:
-        if ((grid[2][0] == 'O') || (grid[2][0] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[2][0] == 'O') || (grid[2][0] == 'X'));
     case 7:
-        if ((grid[2][1] == 'O') || (grid[2][1] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[2][1] == 'O') || (grid[2][1] == 'X'));
     case 8:
-        if ((grid[2][2] == 'O') || (grid[2][2] == 'X')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ((grid[2][2] == 'O') || (grid[2][2] == 'X'));
     default:
         return false;
     }
+    return false;
 }
 
 bool won(const char player, const char grid[3][3])
@@ -243,6 +205,7 @@ bool won(const char player, const char grid[3][3])
     else {
         return false;
     }
+    return false;
 }
 
 bool get_export()
