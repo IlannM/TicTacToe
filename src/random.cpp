@@ -5,7 +5,7 @@
 // I just addapted it by putting it on a function with arguments
 // that represent the range of the posible random numebers.
 
-int get_random_num(const int start_num = 1, const int end_num = 10) {
+int get_random_num(const int start_num, const int end_num) {
     std::random_device rd;
     std::mt19937::result_type seed = rd() ^ (
         (std::mt19937::result_type)

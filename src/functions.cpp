@@ -20,13 +20,13 @@ static char get_random_player()
 
 int player_move(const char &player)
 {
+    printf("%c: ", player);
     int move = 0;
-    std::cout << player << ": ";
     bool failed {false};
 
     do {
         if (failed)
-            std::cout << "The number must be betweem 1-9.\n";
+            puts("The number must be betweem 1-9.");
         
         std::cin >> move;
 
@@ -44,14 +44,14 @@ char starting_player()
 {
     char player = 0;
     bool firsrt_time {true};
-    std::cout << "Starting player (X/O).\n";
-    std::cout << "Enter \'r\' to be random.\n";
+    puts("Starting player (X/O).");
+    puts("Enter \'r\' to be random.");
 
     while (player != 'X' && player != 'O' && player != 'R')
     {
         if (!firsrt_time)
         {
-            std::cout << "(The option must be \'X\' or \'O\')\n";
+            puts("(The option must be \'X\' or \'O\')");
             std::cin.ignore(32767,'\n');
         }
 
@@ -63,12 +63,10 @@ char starting_player()
         player = toupper(player);
     }
 
-    if (player == 'R') // random player
-        return get_random_player();
-
-    return player; // 'X' or 'O'
+    return (player == 'R') ? get_random_player() : player;
 }
 
+/*  -- obsolete function --
 void create_grid(char grid[3][3])
 {
     // write to the grid numbers from 1 to 9
@@ -82,13 +80,14 @@ void create_grid(char grid[3][3])
         }
     }
 }
+*/
 
 void display_grid(const char grid[3][3])
 {
     std::cout << '\n';
     for (int i = 0; i < 3; ++i)
     {
-        std::cout << ' ';
+        printf(" ");
         for (int j = 0; j < 3; ++j)
         {
             std::cout << grid[i][j];
@@ -96,14 +95,14 @@ void display_grid(const char grid[3][3])
             if (j == 2)
                 continue;
 
-            std::cout << " | ";
+            printf(" | ");
         }
         if (i == 2)
             continue;
 
-        std::cout << "\n---|---|---\n";
+        puts("\n---|---|---");
     }
-    std::cout << "\n\n";
+    puts("\n");
 }
 
 char change_player(const char &current_player)
@@ -143,12 +142,12 @@ void write_to_grid(char grid[3][3], const int &player_move, const char &player)
         grid[2][2] = player;
         break;
     default:
-        std::cout << "An unexpected error ocurred.\n";
+        puts("An unexpected error ocurred.");
         break;
     }
 }
 
-bool is_taken(const int player_move, const char grid[3][3])
+bool is_taken(const int &player_move, const char grid[3][3])
 {
     switch (player_move)
     {
@@ -213,20 +212,18 @@ bool get_export()
     char export_game = 0;
     bool first_time {true};
 
-    std::cout << "Export game? (y/n): ";
+    puts("Export game? (y/n):");
     while (export_game != 'y' && export_game != 'n')
     {
-        if (!first_time) {
-            std::cout << "The option must be \'y\' or \'n\'\n";
-        }
+        if (!first_time)
+            puts("The option must be \'y\' or \'n\'");
 
         std::cin >> export_game;
 
         first_time = false;
 
-        if (std::cin.fail()) {
+        if (std::cin.fail())
             clear_cin();
-        }
     }
     return (export_game == 'y');
 }
@@ -270,7 +267,7 @@ void export_game_f(const char grid[3][3], const bool &draw, const char &player)
     if (draw) {
         file << "Draw";
     } else {
-        file << "Winner: " << player;
+        file << "Winner: \'" << player << '\'';
     }
 
     file << ".\n\n----------------------\n\n";
@@ -281,6 +278,6 @@ void export_game_f(const char grid[3][3], const bool &draw, const char &player)
 void finish_game()
 {
     clear_cin();
-    std::cout << "Press ENTER to exit the program.";
+    puts("Press ENTER to exit the program.");
     std::cin.get();
 }

@@ -3,16 +3,19 @@
 // under the MIT licence.
 
 #include "functions.hpp"
-#include <iostream>
+#include <cstdio>
 
 int main()
 {
-    char grid[3][3]{}; // 3x3 grid
+    char grid[3][3] { // 3x3 grid
+        {'1','2','3'},
+        {'4','5','6'},
+        {'7','8','9'},
+    };
 
-    create_grid(grid);
+    // create_grid(grid);
 
     // start game
-
     char player {starting_player()};
     int move = 0;
     bool player_won {false};
@@ -20,19 +23,18 @@ int main()
 
     for (int plays = 0; plays < 9;) // the '++plays' is on line 40
     {
-        if (!already_taken) {
+        if (!already_taken)
             display_grid(grid);
-        } else {
+        else
             already_taken = false;
-        }
 
         move = player_move(player);
 
         // move-1 because we need to start counting with
-        if (is_taken(move-1, grid))
+        already_taken = is_taken(move-1, grid);
+        if (already_taken)
         {
-            std::cout << "Already taken.\n";
-            already_taken = true;
+            puts("Already taken.");
             continue;
         }
 
@@ -45,7 +47,7 @@ int main()
         {
             player_won = true;
             display_grid(grid);
-            std::cout << player << " won.\n";
+            printf("\'%c\' won.\n", player);
             break;
         }
 
@@ -53,12 +55,12 @@ int main()
     }
 
     if (!player_won)
-        std::cout << "Draw.\n\n";
+        puts("Draw.\n");
 
     if (get_export())
         export_game_f(grid, !player_won, player);
 
-    std::cout << "\nThank you for playing!\n\n";
+    puts("\nThank you for playing!\n");
 
     finish_game();
 
